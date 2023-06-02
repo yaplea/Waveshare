@@ -1,6 +1,6 @@
 from machine import Pin
 
-waveshare_PINS = [14,15,16,17,18,19,20,21]
+waveshare_PINS = [x for x in range(19,27)]
 
 class relay:
     def __init__(self, pin_value) -> None:
