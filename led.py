@@ -2,7 +2,7 @@ from board_pins import PINS
 from machine import Pin
 from neopixel import NeoPixel
 import array
-from time import sleep
+from time import slee
 
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
