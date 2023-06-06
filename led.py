@@ -2,7 +2,7 @@ from board_pins import PINS
 from machine import Pin
 from neopixel import NeoPixel
 import array
-from time import slee
+from time import sleep
 
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -16,13 +16,12 @@ WHITE = (255, 255, 255)
 
 class Led:
     def __init__(self) -> None:
-        self.pin = Pin(PINS.RGB, Pin.OUT)
-        self.led = NeoPixel(self.pin, 1)
+        self.led = NeoPixel(PINS.RGB, 1)
         self.brightness = 1
 
     def boot(self):
         for brightness in range(0, 1, .05):
-            self.fill(RED * brightness, delay=.1)
+            self.fill(RED, brightness=brightness, delay=.1)
         for _ in range(10):
             self.fill(RED, delay=1)
             self.fill(BLUE, delay=1)
@@ -31,12 +30,10 @@ class Led:
     def fill(self,
              value,
              **kwargs):
-        try:
-            delay = kwargs["delay"]
-        except:
-            delay = 0
-        self.led.fill(value)
-        self.led.show()
+        self.led.brightness = kwargs.get("brightness", 1)
+        delay = kwargs.get("delay", 1)
+        self.led.fill[0] = value
+        self.led.write()
         sleep(delay)
 
     def off(self):
@@ -60,6 +57,9 @@ class Led:
             try:
                 self.fill(color, delay=.2)
                 self.off()
+                self.fill(color, delay = 3)
+                self.off()
+                sleep(3)
             except:
                 self.warning()
                 return
@@ -73,4 +73,5 @@ class Led:
                  nodes_watering: int):
         
         self.blink(GREEN, nodes_watering)
+
     
