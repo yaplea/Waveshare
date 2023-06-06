@@ -7,10 +7,7 @@ class wifi_module:
     def __init__(self, **kwargs) -> None:
         self.wifi = network.WLAN(network.STA_IF)
         self.status = self.wifi.status
-        try:
-            self.led = kwargs["led"]
-        except:
-            self.led = None
+        self.led = kwargs.get("led", None)
 
     @property
     def status(self):
@@ -21,6 +18,7 @@ class wifi_module:
         return value
 
     def connect(self):
+        Led.connecting()
         attempts = 0
         while not self.wifi.isconnected():
             attempts += 1
@@ -28,6 +26,7 @@ class wifi_module:
             self.wifi.connect(hidden.SSID, hidden.PASSKEY)
             if attempts > 5:
                 raise ConnectionError
+        Led.off()
         return None
     
     def disconnect(self):
@@ -38,3 +37,6 @@ class wifi_module:
         while True:
             Led.warning = True
             try:
+                self.connect()
+            except:
+                attempts += 1
