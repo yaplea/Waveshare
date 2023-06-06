@@ -1,22 +1,13 @@
-from machine import Pin
+from machine import Pins
+from board_pins import PINS
 
-waveshare_PINS = [x for x in range(19,27)]
 
 class relay:
-    def __init__(self, pin_value) -> None:
-        if isinstance(pin_value, int):
-            if any([pin_value in waveshare_PINS]):
-                self.pin_number:int = pin_value
-                self.setup()
-
-            else:
-                raise ValueError(f"Pin {pin_value} not an available pin")
+    def __init__(self, pin) -> None:
+        if isinstance(pin, Pins):
+            self.state = self.pin.value
         else:
-            raise TypeError(f"Value {pin_value} not int")
-        
-    def setup(self):
-        self.pin = Pin(self.pin_number, Pin.OUT)
-        self.state = self.pin.value
+            raise TypeError(f"Value is not a pin")
 
     def on(self):
         self.pin.on()
