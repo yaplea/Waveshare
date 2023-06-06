@@ -1,7 +1,5 @@
 from board_pins import PINS
-from machine import Pin
 from neopixel import NeoPixel
-import array
 from time import sleep
 
 BLACK = (0, 0, 0)
