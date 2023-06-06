@@ -18,8 +18,7 @@ class Led:
         self.brightness = 1
 
     def boot(self):
-        for brightness in range(0, 1, .05):
-            self.fill(RED, brightness=brightness, delay=.1)
+        self.waterfall(RED)
         for _ in range(10):
             self.fill(RED, delay=1)
             self.fill(BLUE, delay=1)
@@ -29,7 +28,7 @@ class Led:
              value,
              **kwargs):
         self.led.brightness = kwargs.get("brightness", 1)
-        delay = kwargs.get("delay", 1)
+        delay = kwargs.get("delay", 0)
         self.led.fill[0] = value
         self.led.write()
         sleep(delay)
@@ -43,6 +42,11 @@ class Led:
             self.off()
             self.fill(RED, delay=.1)
             self.off()
+        self.fill(RED)
+
+    def connecting(self):
+        self.fill(BLUE)
+        
 
     def idle(self):
         self.fill(GREEN)
@@ -65,7 +69,7 @@ class Led:
     def waterfall(self,
                   color):
         for brightness in range(0, 1, .05):
-            self.fill(color * brightness, delay= .1)
+            self.fill(color, brightness = brightness, delay= .1)
 
     def watering(self,
                  nodes_watering: int):
